@@ -1,7 +1,94 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom'
+
+const ConteinerOuter = styled.div`
+    text-align: center;
+    background-color: rgb(21, 32, 43);
+    height: 100vh;
+`;
+
+const Conteiner = styled.div`
+    display: flex;
+    padding: 100px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 50%;
+    margin: 0 auto;
+`;
+
+const Header = styled.h2`
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+`;
+
+const Message = styled.p`
+    color: red;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    font-weight: lighter;
+`;
+
+const Text = styled.h3`
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    font-weight: lighter;
+`;
+
+const Input = styled.input`
+    width: 500px;
+    height: 50px;
+    background-color: rgb(25, 39, 52);
+    margin-bottom: 25px;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 2px solid rgba(136, 153, 166, 0.5);
+    color: #fff;
+
+    &:focus {
+        border-bottom: 2px solid rgba(136, 153, 166, 1);
+        outline: 0;
+    }
+
+    &::-webkit-input-placeholder {
+        color: rgba(136, 153, 166, 0.5);
+    }
+
+    &:focus::-webkit-input-placeholder {
+        color: rgba(136, 153, 166, 1);
+    }
+`;
+
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+const Button = styled.button`
+    width: 500px;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: rgba(27, 149, 224, 0.5);
+    color: rgba(255, 255, 255, 0.5);
+    
+    cursor: pointer;
+    border: 0;
+
+    &:hover {
+        background-color: rgba(27, 149, 224, 1);
+        color: rgba(255, 255, 255, 1);
+    }
+
+    &:focus {
+        outline: 0;
+    }
+`;
 
 class Login extends Component {
 
@@ -65,14 +152,16 @@ class Login extends Component {
                     }); 
                 });
             } else {
-                this.setState(state => {
-                    return({
-                        message: '',
-                        token: res.data.jwt_token,
-                        loginState: true,
-                    }); 
-                });
-                console.log(this.state.token);
+                // this.setState(state => {
+                //     return({
+                //         message: '',
+                //         token: res.data.jwt_token,
+                //         loginState: true,
+                //     }); 
+                // });
+                console.log(res.data);
+                localStorage.setItem('user', JSON.stringify(res.data));
+                this.props.changeLoginState(true);
             }
         })
         .catch((err) => {
@@ -80,113 +169,10 @@ class Login extends Component {
         })
     }
 
-    addToLocalStorage = () => {
-        if(this.state.loginState) {
-            localStorage.setItem('username', this.state.username);
-            localStorage.setItem('password', this.state.password);
-            localStorage.setItem('token', this.state.token);
-        }
-    }
-
-    renderRedirect = () => {
-        if (this.state.loginState) {
-          return <Redirect to='/' />
-        }
-    }
-
     render(){
-
-        const Counter = styled.div`
-            text-align: center;
-            background-color: rgb(21, 32, 43);
-            height: 100vh;
-        `;
-
-        const CounterInner = styled.div`
-            display: flex;
-            padding: 100px;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            max-width: 50%;
-            margin: 0 auto;
-        `;
-
-        const Header = styled.h2`
-            color: #fff;
-            font-family: 'Open Sans', sans-serif;
-        `;
-
-        const Message = styled.p`
-            color: red;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 12px;
-            font-weight: lighter;
-        `;
-
-        const Text = styled.h3`
-            color: #fff;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 12px;
-            font-weight: lighter;
-        `;
-
-        const Input = styled.input`
-            width: 500px;
-            height: 50px;
-            background-color: rgb(25, 39, 52);
-            margin-bottom: 25px;
-            border-top: 0;
-            border-left: 0;
-            border-right: 0;
-            border-bottom: 2px solid rgba(136, 153, 166, 0.5);
-            color: #fff;
-
-            &:focus {
-                border-bottom: 2px solid rgba(136, 153, 166, 1);
-                outline: 0;
-            }
-
-            &::-webkit-input-placeholder {
-                color: rgba(136, 153, 166, 0.5);
-            }
-
-            &:focus::-webkit-input-placeholder {
-                color: rgba(136, 153, 166, 1);
-            }
-        `;
-
-        const Form = styled.form`
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        `;
-
-        const Button = styled.button`
-            width: 500px;
-            font-size: 20px;
-            padding: 10px 20px;
-            border-radius: 20px;
-            background-color: rgba(27, 149, 224, 0.5);
-            color: rgba(255, 255, 255, 0.5);
-            
-            cursor: pointer;
-            border: 0;
-
-            &:hover {
-                background-color: rgba(27, 149, 224, 1);
-                color: rgba(255, 255, 255, 1);
-            }
-
-            &:focus {
-                outline: 0;
-            }
-        `;
-
         return (
-            <Counter>
-                <CounterInner>
+            <ConteinerOuter>
+                <Conteiner>
                     <Header>Zaloguj się do SocialApp</Header>
                     <Message >{this.state.message}</Message >
                     <Form action="" onSubmit = {this.logIn}>
@@ -195,11 +181,8 @@ class Login extends Component {
                         <Button type="submit">Zaloguj się</Button>
                     </Form>
                     <Text>Nie pamiętasz hasła? <span>&#183;</span> Zarejestruj się aby korzystać z SocialApp</Text>
-                    {/* {props.changeLoginState(this.state.loginState)} */}
-                    {this.renderRedirect()}
-                    {this.addToLocalStorage()}
-                </CounterInner>
-            </Counter>
+                </Conteiner>
+            </ConteinerOuter>
         );
     }
 }

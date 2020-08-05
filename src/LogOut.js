@@ -1,39 +1,53 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
+
+const ConteinerOuter = styled.div`
+    text-align: center;
+    background-color: rgb(21, 32, 43);
+    height: 100vh;
+`;
 
 class LogOut extends Component {
 
-    render(){
+    getLogOutUser = () => {
+        // let postData = {
+        //     jwt_token: localStorage.getItem('user').jwt_token
+        // };
 
-        const Counter = styled.div`
-            text-align: center;
-            background-color: rgb(21, 32, 43);
-            height: 100vh;
-        `;
+        // let axiosConfig = {
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Accept': 'application/json',
+        //         'Authorization': 'Bearer ' + localStorage.getItem('user').jwt_token
+        //     }
+        // };
 
-        const CounterInner = styled.div`
-            display: flex;
-            padding: 100px;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            max-width: 50%;
-            margin: 0 auto;
-        `;
+        // axios.post(
+        //     'https://akademia108.pl/api/social-app/user/logout', 
+        //     postData, 
+        //     axiosConfig)
+        // .then((res) => {
+        //     console.log("RESPONSE RECEIVED: ", res);
+        // })
+        // .catch((err) => {
+        //     console.log("AXIOS ERROR: ", err);
+        // })
 
-        const Header = styled.h2`
-            color: #fff;
-            font-family: 'Open Sans', sans-serif;
-        `;
+        let user = JSON.parse(localStorage.getItem('user'));
+        localStorage.removeItem('user');
 
-        return (
-            <Counter>
-                <CounterInner>
-                    <Header>Log out</Header>
-                </CounterInner>
-            </Counter>
-        );
+        this.props.changeLoginState(false);
     }
+
+
+    render(){
+        return (
+            <ConteinerOuter>
+                {this.getLogOutUser}
+            </ConteinerOuter>
+        );
+    }  
 }
 
 export default LogOut;
