@@ -34,35 +34,35 @@ changeLoginState = (action) => {
 }
 
 getLogOutUser = (action) => {
-  localStorage.removeItem('user');
-  //this.user = JSON.parse(localStorage.getItem('user'));
-  //const token = this.user.jwt_token;
+  this.user = JSON.parse(localStorage.getItem('user'));
+  const token = this.user.jwt_token;
 
-  // let axiosConfig = {
-  //   headers: {
-  //       'Content-Type': 'application/json',
-  //       'Accept': 'application/json',
-  //       'Authorization': 'Bearer ' + token
-  //   }
-  // };
+  let axiosConfig = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
+  };
 
-  // axios.post(
-  //   'https://akademia108.pl/api/social-app/user/logout', 
-  //   JSON.stringify(newUser),
-  //   axiosConfig)
-  //   .then((req) => {     
-  //       console.log(req.data);  
-  //   }).catch((error) => {
-  //       console.error(error);
-  //   })
+  axios.post(
+    'https://akademia108.pl/api/social-app/user/logout', 
+    {},
+    axiosConfig)
+    .then((req) => {     
+        console.log(req.data); 
+    }).catch((error) => {
+        console.error(error);
+    })
 
-  this.setState(prevState => {
-    return({
-      loginStatus: action
-    }); 
-  });
-  console.log(this.state.loginStatus);
-} 
+    this.setState(prevState => {
+      return({
+        loginStatus: action
+      }); 
+    });
+    localStorage.removeItem('user');
+    console.log(this.state.loginStatus);
+  } 
 
   render(){
 
