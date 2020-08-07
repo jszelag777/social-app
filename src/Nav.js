@@ -45,6 +45,17 @@ const NavLink = styled(Link)`
     }
 `;
 
+const LogOut = styled.div`
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+
+    &:hover {
+    color: blue;
+    }
+`;
+
 function Nav(props) {
 
     let user = JSON.parse(localStorage.getItem('user'));
@@ -56,7 +67,8 @@ function Nav(props) {
                 <Li><NavLink to="/">Home</NavLink></Li>
                 {!user && <Li><NavLink to="/Login">Login</NavLink></Li>}
                 {!user && <Li><NavLink to="/SignUp">SignUp</NavLink></Li>}
-                {user &&<Li><NavLink to="/LogOut">LogOut</NavLink></Li>}
+                {user &&<Li><LogOut onClick={() => {
+                    props.getLogOutUser(false)}}>LogOut</LogOut></Li>}
             </Ul>
         </NavConteiner>
     ); 
