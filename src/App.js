@@ -35,8 +35,8 @@ changeLoginState = (action) => {
 
 getLogOutUser = (action) => {
   localStorage.removeItem('user');
-  this.user = JSON.parse(localStorage.getItem('user'));
-  const token = this.user.jwt_token;
+  //this.user = JSON.parse(localStorage.getItem('user'));
+  //const token = this.user.jwt_token;
 
   // let axiosConfig = {
   //   headers: {
